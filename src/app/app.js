@@ -1,7 +1,7 @@
 import html from "./app.html";
 import tableHtml from "../contragents/table/table.html";
 import modalHtml from "../contragents/modal/modal.html";
-import './app.css'
+import './app.module.css'
 import '../contragents/table/table.css'
 import * as table from '../contragents/table/table.js';
 import * as modal from '../contragents/modal/modal.js';
