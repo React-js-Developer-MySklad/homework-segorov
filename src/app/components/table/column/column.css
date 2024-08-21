@@ -1,0 +1,10 @@
+.dom-table-head {
+    @apply text-xs;
+    @apply text-gray-700;
+    @apply uppercase;
+    @apply bg-gray-50;
+
+    .dom-table-head-column {
+        @apply px-6 py-3;
+    }
+}
