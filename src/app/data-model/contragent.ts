@@ -1,5 +1,5 @@
 export type Contragent = {
-    id?: number;
+    id?: string;
     name?: string;
     inn?: string;
     address?: string;

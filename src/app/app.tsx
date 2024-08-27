@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { v4 as uuid } from 'uuid';
 
 import './app.module.css';
 
@@ -8,20 +9,38 @@ import {Table} from './components/table/table';
 import Logo from '@assets/header-logo.svg';
 import data from './data-model/data.json';
 import {Contragent} from './data-model/contragent';
+import {useContragentApiContext} from './hooks/ContragentApiProvider';
 
-const contragents: Array<Contragent> = data;
+
+const contragents: Array<Contragent> = [];
 
 
-//протаскивать функцию удаления такое себе
+//сложнее стало работать с number как id (json server не поддерживает)
 const App  = () => {
+    // наверное не нужно прокидывать в компоненты, а получать функции из контекста в самой компаненте, но оставлю так
+    const {getContragents, createContragent, updateContragent, deleteContragent} = useContragentApiContext();
+
     const [state, setState] = useState({
         //отображаем модальное окно
         showModal: false,
         //храним список контрагентов
         contragents: contragents,
         currentContragent: null,
-        counter: 2
     });
+
+    const loadData = async () => {
+      const contragents = await getContragents();
+      setState({
+        ...state,
+        contragents: contragents,
+        showModal: false,
+        currentContragent: null
+      });
+    };
+
+    useEffect(() => {
+        loadData();
+    }, []);
 
     const showModalFunction = (sModal: boolean) => {
         setState({
@@ -32,10 +51,11 @@ const App  = () => {
     }
 
     const removeContragent = (contragent: Contragent) => {
-        setState({
-            ...state,
-            contragents: state.contragents.filter((agent) => agent.id !== contragent.id)
-        });
+        const remove = async (ctr: Contragent) => {
+            const r = await deleteContragent(ctr);
+            loadData();
+        };
+        remove(contragent);
     }
 
     const editContagent = (contragent: Contragent) => {
@@ -48,15 +68,19 @@ const App  = () => {
 
     const addContragent = (contragent: Contragent) => {
         if (!contragent.id) {
-            contragent.id = state.counter;
-        };
-        setState({
-            ...state,
-            showModal: false,
-            contragents: state.currentContragent ? state.contragents.map(c => c.id === state.currentContragent.id ? contragent: c) : [...state.contragents, contragent],
-            counter: state.currentContragent ? state.counter : state.counter + 1,
-            currentContragent: null,
-        });
+            contragent.id = uuid();
+            const create = async (ctr: Contragent) => {
+                const result = await createContragent(ctr);
+                loadData();
+            };
+            create(contragent);
+        } else {
+            const update = async (ctr: Contragent) => {
+                const result = await updateContragent(ctr);
+                loadData();
+            }
+            update(contragent);
+        }
     }
 
     return (
