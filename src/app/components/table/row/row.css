@@ -1,0 +1,11 @@
+.dom-table-row {
+    @apply border-b;
+
+    .dom-table-row-head {
+        @apply font-medium text-gray-900 whitespace-nowrap;
+    }
+
+    .dom-table-row-column {
+        @apply px-6 py-4;
+    }
+}
