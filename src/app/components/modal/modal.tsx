@@ -1,4 +1,5 @@
 import './modal.css';
+import { Form, Field } from 'react-final-form'
 import {MouseEventHandler, FormEvent, useState} from 'react';
 import {Contragent} from '../../data-model/contragent';
 
@@ -9,20 +10,20 @@ type ModalProps = {
 }
 
 const Modal = ({closeFunction, contragent, addFunction}: ModalProps) => {
-    const [name, setName] = useState(contragent?.name || '');
-    const [inn, setInn] = useState(contragent?.inn || '');
-    const [address, setAddress] = useState(contragent?.address || '');
-    const [kpp, setKpp] = useState(contragent?.kpp || '');
+    //оставим тип без id
+    type FormValues = Omit<Contragent, 'id'>;
 
-    const saveContragent = (e: FormEvent) => {
-        e.preventDefault();
+    const saveContragent = (values: FormValues) => {
         addFunction({
             id: contragent ? contragent.id : null,
-            name,
-            inn,
-            address,
-            kpp
+            ...values
         });
+    }
+
+    const required = (value: string) => {
+        if (!value || value.length < 1) {
+            return 'Fill field please';
+        }
     }
 
     return (
@@ -46,44 +47,76 @@ const Modal = ({closeFunction, contragent, addFunction}: ModalProps) => {
                         </button>
                     </div>
                     <div className="p-4 md:p-5">
-                        <form id="counterparty-form" className="space-y-4" action="#" onSubmit={saveContragent}>
-                            <div>
-                                <label className="modal-body-label">Name</label>
-                                <input type="text" id="name"
-                                       className="modal-body-input"
-                                       value={name}
-                                       onChange={e => setName(e.target.value)}
-                                       required/>
-                            </div>
-                            <div>
-                                <label className="modal-body-label">INN</label>
-                                <input type="text" id="inn"
-                                       className="modal-body-input"
-                                       value={inn}
-                                       onChange={e => setInn(e.target.value)}
-                                       required/>
-                            </div>
-                            <div>
-                                <label className="modal-body-label">Address</label>
-                                <input type="text" id="address"
-                                       className="modal-body-input"
-                                       value={address}
-                                       onChange={e => setAddress(e.target.value)}
-                                       required/>
-                            </div>
-                            <div>
-                                <label className="modal-body-label">KPP</label>
-                                <input type="text" id="kpp"
-                                       className="modal-body-input"
-                                       value={kpp}
-                                       onChange={e => setKpp(e.target.value)}
-                                       required/>
-                            </div>
-                            <button id="create-button-custom" type="submit"
-                                    className="modal-body-button">
-                                {contragent ? "Update" : "Create"}
-                            </button>
-                        </form>
+                        <Form onSubmit={saveContragent} subscription={{submitting: true}} initialValues={contragent as FormValues}>
+                            {({handleSubmit, submitting}) => (
+                                <form id="counterparty-form" className="space-y-4" action="#" onSubmit={handleSubmit}>
+                                    <div>
+                                        <label className="modal-body-label">Name</label>
+                                        <Field name="name" validate={required}>
+                                            {({input, meta}) => (
+                                                <div>
+                                                    <input type="text" id="name"
+                                                       className="modal-body-input"
+                                                       value={input.value}
+                                                       onChange={e => input.onChange(e.target.value)}
+                                                       />
+                                                    {meta.error && <span>{meta.error}</span>}
+                                                </div>
+                                            )}
+                                        </Field>
+                                    </div>
+                                    <div>
+                                        <label className="modal-body-label">INN</label>
+                                        <Field name="inn" validate={required}>
+                                            {({input, meta}) => (
+                                                <div>
+                                                    <input type="text" id="inn"
+                                                       className="modal-body-input"
+                                                       value={input.value}
+                                                       onChange={e => input.onChange(e.target.value)}
+                                                       />
+                                                   {meta.error && <span>{meta.error}</span>}
+                                                </div>
+                                            )}
+                                        </Field>
+                                    </div>
+                                    <div>
+                                        <label className="modal-body-label">Address</label>
+                                        <Field name="address" validate={required}>
+                                            {({input, meta}) => (
+                                                <div>
+                                                    <input type="text" id="address"
+                                                       className="modal-body-input"
+                                                       value={input.value}
+                                                       onChange={e => input.onChange(e.target.value)}
+                                                       />
+                                                   {meta.error && <span>{meta.error}</span>}
+                                                </div>
+                                            )}
+                                        </Field>
+                                    </div>
+                                    <div>
+                                        <label className="modal-body-label">KPP</label>
+                                        <Field name="kpp" validate={required}>
+                                            {({input, meta}) => (
+                                                <div>
+                                                    <input type="text" id="kpp"
+                                                       className="modal-body-input"
+                                                       value={input.value}
+                                                       onChange={e => input.onChange(e.target.value)}
+                                                       />
+                                                    {meta.error && <span>{meta.error}</span>}
+                                                </div>
+                                            )}
+                                        </Field>
+                                    </div>
+                                    <button id="create-button-custom" type="submit"
+                                            className="modal-body-button">
+                                        {contragent ? "Update" : "Create"}
+                                    </button>
+                                </form>
+                            )}
+                        </Form>
                     </div>
                 </div>
             </div>

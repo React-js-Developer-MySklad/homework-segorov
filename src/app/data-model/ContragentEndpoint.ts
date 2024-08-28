@@ -1,7 +1,7 @@
 import {Contragent} from './contragent';
 
 //так как запускаю из docker-compose то тут нужен ip, а не localhost
-const ENDPOINT = 'http://172.19.0.3:3000/contragents';
+const ENDPOINT = 'http://172.19.0.2:3000/contragents';
 
 export const getContragents = () => {
     return fetch(ENDPOINT).then(response => response.json()).catch(e => console.log(e));
