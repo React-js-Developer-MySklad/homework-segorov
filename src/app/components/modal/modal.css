@@ -1,0 +1,114 @@
+.modal-outer {
+        @apply flex;
+        @apply overflow-y-auto;
+        @apply overflow-x-hidden;
+        @apply fixed;
+        @apply top-0;
+        @apply right-0;
+        @apply left-0;
+        @apply z-50;
+        @apply justify-center;
+        @apply items-center;
+        @apply w-full;
+        @apply md:inset-0;
+        @apply h-screen;
+        @apply max-h-full;
+        @apply bg-gray-900/50;
+}
+.modal {
+    @apply relative;
+    @apply p-4;
+    @apply w-full;
+    @apply max-w-md;
+    @apply max-h-full;
+}
+
+.modal-inner {
+    @apply relative;
+    @apply bg-white;
+    @apply rounded-lg;
+    @apply shadow;
+    @apply dark:bg-gray-700;
+}
+
+.modal-header {
+    @apply flex;
+    @apply items-center;
+    @apply justify-between;
+    @apply p-4;
+    @apply md:p-5;
+    @apply border-b;
+    @apply rounded-t;
+    @apply dark:border-gray-600;
+}
+
+.modal-header-title {
+    @apply text-xl;
+    @apply font-semibold;
+    @apply text-gray-900;
+    @apply dark:text-white;
+}
+
+.modal-header-close-button {
+    @apply end-2.5;
+    @apply text-gray-400;
+    @apply bg-transparent;
+    @apply hover:bg-gray-200;
+    @apply hover:text-gray-900;
+    @apply rounded-lg;
+    @apply text-sm;
+    @apply w-8;
+    @apply h-8;
+    @apply ms-auto;
+    @apply inline-flex;
+    @apply justify-center;
+    @apply items-center;
+    @apply dark:hover:bg-gray-600;
+    @apply dark:hover:text-white;
+}
+
+.modal-body-label {
+    @apply block;
+    @apply mb-2;
+    @apply text-sm;
+    @apply font-medium;
+    @apply text-gray-900;
+    @apply dark:text-white;
+}
+
+.modal-body-input {
+    @apply bg-gray-50;
+    @apply border;
+    @apply border-gray-300;
+    @apply text-gray-900;
+    @apply text-sm;
+    @apply rounded-lg;
+    @apply focus:ring-blue-500;
+    @apply focus:border-blue-500;
+    @apply block;
+    @apply w-full;
+    @apply p-2.5;
+    @apply dark:bg-gray-600;
+    @apply dark:border-gray-500;
+    @apply dark:placeholder-gray-400;
+    @apply dark:text-white;
+}
+
+.modal-body-button {
+    @apply w-full;
+    @apply text-white;
+    @apply bg-blue-700;
+    @apply hover:bg-blue-800;
+    @apply focus:ring-4;
+    @apply focus:outline-none;
+    @apply focus:ring-blue-300;
+    @apply font-medium;
+    @apply rounded-lg;
+    @apply text-sm;
+    @apply px-5;
+    @apply py-2.5;
+    @apply text-center;
+    @apply dark:bg-blue-600;
+    @apply dark:hover:bg-blue-700;
+    @apply dark:focus:ring-blue-800;
+}
